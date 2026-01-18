@@ -120,20 +120,6 @@ router.post("/check", async (req, res) => {
 
 router.post("/check-region", async (req, res) => {
   try {
-    /*
-      Expected body:
-      {
-        "user_id": "1583941748",
-        "server_id": "16653"
-      }
-
-      OR (alternative keys)
-      {
-        "id": "1583941748",
-        "zone": "16653"
-      }
-    */
-
     let { user_id, server_id, id, zone } = req.body;
 
     // 🔁 Map alternative keys
@@ -142,39 +128,45 @@ router.post("/check-region", async (req, res) => {
 
     /* ===== VALIDATION ===== */
     if (!user_id || !server_id) {
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
-        error: "Missing required fields: user_id & server_id",
+        message: "Missing required fields",
+        data: null,
       });
     }
 
     /* ===== BUILD XPRELOADS URL ===== */
-    const xpreloadsUrl =
+    const url =
       `https://xpreloads.com/api/api/mlbb` +
       `?user_id=${encodeURIComponent(user_id)}` +
       `&server_id=${encodeURIComponent(server_id)}`;
 
-    /* ===== CALL XPRELOADS API ===== */
-    const response = await fetch(xpreloadsUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    /* ===== CALL API ===== */
+    const response = await fetch(url);
+    const apiData = await response.json();
+
+    /* ===== NORMALIZE RESPONSE ===== */
+    return res.status(200).json({
+      success: true,
+      message: "Region checked successfully",
+      data: {
+        username: apiData.username || null,
+        region: apiData.country || null,   // mapped from country
+        user_id: apiData.user_id || user_id,
+        zone: apiData.server_id || server_id,
       },
     });
 
-    const data = await response.json();
-
-    /* ===== PASS THROUGH RESPONSE ===== */
-     return res.status(200).json(data);
-
   } catch (err) {
-    console.error("Xpreloads MLBB error:", err);
-    return res.status(500).json({
+    console.error("Check-region error:", err);
+    return res.status(200).json({
       success: false,
-      error: "Internal server error",
+      message: "Internal server error",
+      data: null,
     });
   }
 });
+
 
 
 
