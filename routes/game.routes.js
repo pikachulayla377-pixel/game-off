@@ -165,7 +165,7 @@ router.post("/check-region", async (req, res) => {
     const data = await response.json();
 
     /* ===== PASS THROUGH RESPONSE ===== */
-     return res.status(response.status).json(data);
+     return res.status(200).json(data);
 
   } catch (err) {
     console.error("Xpreloads MLBB error:", err);
