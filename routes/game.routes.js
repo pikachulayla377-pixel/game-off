@@ -65,20 +65,9 @@ router.get("/game/:slug", async (req, res) => {
   }
 });
 
-router.post("/check-region", async (req, res) => {
+router.post("/check", async (req, res) => {
   try {
-    /*
-      Expected body:
-      {
-        "id": "109774957",
-        "zone": "2569"
-      }
-
-      Optional:
-      {
-        "game": "mlbb"
-      }
-    */
+   
 
     let { game, user_id, server_id, id, zone } = req.body;
 
@@ -121,6 +110,68 @@ router.post("/check-region", async (req, res) => {
     return res.status(response.status).json(data);
   } catch (err) {
     console.error("Busan check-region error:", err);
+    return res.status(500).json({
+      success: false,
+      error: "Internal server error",
+    });
+  }
+});
+
+
+router.post("/check-region", async (req, res) => {
+  try {
+    /*
+      Expected body:
+      {
+        "user_id": "1583941748",
+        "server_id": "16653"
+      }
+
+      OR (alternative keys)
+      {
+        "id": "1583941748",
+        "zone": "16653"
+      }
+    */
+
+    let { user_id, server_id, id, zone } = req.body;
+
+    // 🔁 Map alternative keys
+    if (!user_id && id) user_id = id;
+    if (!server_id && zone) server_id = zone;
+
+    /* ===== VALIDATION ===== */
+    if (!user_id || !server_id) {
+      return res.status(400).json({
+        success: false,
+        error: "Missing required fields: user_id & server_id",
+      });
+    }
+
+    /* ===== BUILD XPRELOADS URL ===== */
+    const xpreloadsUrl =
+      `https://xpreloads.com/api/api/mlbb` +
+      `?user_id=${encodeURIComponent(user_id)}` +
+      `&server_id=${encodeURIComponent(server_id)}`;
+
+    /* ===== CALL XPRELOADS API ===== */
+    const response = await fetch(xpreloadsUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+
+    /* ===== PASS THROUGH RESPONSE ===== */
+    return res.status(response.status).json({
+      success: true,
+      source: "xpreloads",
+      data,
+    });
+  } catch (err) {
+    console.error("Xpreloads MLBB error:", err);
     return res.status(500).json({
       success: false,
       error: "Internal server error",
