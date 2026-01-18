@@ -65,47 +65,69 @@ router.get("/game/:slug", async (req, res) => {
   }
 });
 
-
-router.get("/check-region", async (req, res) => {
+router.post("/check-region", async (req, res) => {
   try {
-    const { game, user_id, server_id } = req.query;
+    /*
+      Expected body:
+      {
+        "id": "109774957",
+        "zone": "2569"
+      }
 
-    if (!game || !user_id) {
+      Optional:
+      {
+        "game": "mlbb"
+      }
+    */
+
+    let { game, user_id, server_id, id, zone } = req.body;
+
+    // 🔁 Map body payload keys
+    if (!user_id && id) user_id = id;
+    if (!server_id && zone) server_id = zone;
+
+    // 🎮 Default game
+    if (!game) game = "mlbb";
+
+    /* ===== VALIDATION ===== */
+    if (!user_id) {
       return res.status(400).json({
         success: false,
-        error: "Missing required parameters: game, user_id",
+        error: "Missing required field: user_id or id",
       });
     }
 
-    const query = new URLSearchParams({
-      game,
-      user_id,
+    /* ===== BUILD BUSAN URL (EXACT FORMAT) ===== */
+    const busanUrl =
+      `${process.env.BUSAN_BASE_URL}/check` +
+      `?game=${encodeURIComponent(game)}` +
+      `&user_id=${encodeURIComponent(user_id)}` +
+      (server_id
+        ? `&server_id=${encodeURIComponent(server_id)}`
+        : "");
+
+    /* ===== CALL BUSAN API ===== */
+    const response = await fetch(busanUrl, {
+      method: "GET",
+      headers: {
+        "X-API-KEY": process.env.BUSAN_API_KEY,
+        "Content-Type": "application/json",
+      },
     });
-
-    if (server_id) {
-      query.append("server_id", server_id);
-    }
-
-    const response = await fetch(
-      `${process.env.BUSAN_BASE_URL}/check?${query.toString()}`,
-      {
-        headers: {
-          "X-API-KEY": process.env.BUSAN_API_KEY,
-          "Content-Type": "application/json",
-        },
-      }
-    );
 
     const data = await response.json();
 
+    /* ===== PASS THROUGH RESPONSE ===== */
     return res.status(response.status).json(data);
   } catch (err) {
-    console.error("Busan check error:", err);
-    res.status(500).json({
+    console.error("Busan check-region error:", err);
+    return res.status(500).json({
       success: false,
       error: "Internal server error",
     });
   }
 });
+
+
 
 export default router;
