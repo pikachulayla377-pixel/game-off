@@ -66,7 +66,7 @@ router.get("/game/:slug", async (req, res) => {
 });
 
 
-router.get("/check", async (req, res) => {
+router.get("/check-region", async (req, res) => {
   try {
     const { game, user_id, server_id } = req.query;
 
