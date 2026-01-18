@@ -147,7 +147,7 @@ router.post("/check-region", async (req, res) => {
 
     /* ===== NORMALIZE RESPONSE ===== */
     return res.status(200).json({
-      success: true,
+      success: 200,
       message: "Region checked successfully",
       data: {
         username: apiData.username || null,
