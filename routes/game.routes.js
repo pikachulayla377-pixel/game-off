@@ -5,22 +5,32 @@ import GameDetail from "../models/GameDetail.js";
 const router = express.Router();
 
 /* ===============================
-   GET ALL GAMES
+   HELPERS (SOURCE OF TRUTH)
+   =============================== */
+
+const getAllGames = async () => {
+  return Game.find({
+    gameSlug: { $ne: "test-1637" },
+  }).lean();
+};
+
+const getGameDetailBySlug = async (slug) => {
+  return GameDetail.findOne({ gameSlug: slug }).lean();
+};
+
+/* ===============================
+   GET ALL GAMES (FULL)
    GET /api/v1/game
    =============================== */
 router.get("/game", async (req, res) => {
   try {
-    const games = await Game.find({}).lean();
-
-    const filteredGames = games.filter(
-      (g) => g.gameSlug !== "test-1637"
-    );
+    const games = await getAllGames();
 
     res.json({
       success: true,
       data: {
-        games: filteredGames,
-        totalGames: filteredGames.length,
+        games,
+        totalGames: games.length,
       },
     });
   } catch (err) {
@@ -33,16 +43,45 @@ router.get("/game", async (req, res) => {
 });
 
 /* ===============================
-   GET GAME BY SLUG
+   GET GAME LIST (NAME + SLUG)
+   GET /api/v1/game/list
+   =============================== */
+router.get("/games/list", async (req, res) => {
+  try {
+    const games = await getAllGames();
+
+    const slimGames = games
+      .filter((g) => g.gameAvailablity === true)
+      .map((g) => ({
+        gameName: g.gameName,
+        gameSlug: g.gameSlug,
+      }));
+
+    res.json({
+      success: true,
+      data: {
+        games: slimGames,
+        totalGames: slimGames.length,
+      },
+    });
+  } catch (err) {
+    console.error("Game list error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to load games",
+    });
+  }
+});
+
+/* ===============================
+   GET GAME DETAIL BY SLUG
    GET /api/v1/game/:slug
    =============================== */
 router.get("/game/:slug", async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const record = await GameDetail.findOne({
-      gameSlug: slug,
-    }).lean();
+    const record = await getGameDetailBySlug(slug);
 
     if (!record?.data) {
       return res.status(404).json({
@@ -64,63 +103,35 @@ router.get("/game/:slug", async (req, res) => {
   }
 });
 
-
-router.get("/game/list", async (req, res) => {
-  try {
-    const games = await Game.find(
-      { gameAvailablity: true },
-      { gameName: 1, gameSlug: 1, _id: 0 }
-    ).lean();
-
-    res.json({
-      success: true,
-      data: {
-        games,
-        totalGames: games.length,
-      },
-    });
-  } catch (err) {
-    console.error("Game list error:", err);
-    res.status(500).json({
-      success: false,
-      message: "Failed to load games",
-    });
-  }
-});
-
-router.get("/game/:slug/items", async (req, res) => {
+/* ===============================
+   GET ITEMS BY GAME SLUG
+   GET /api/v1/game/:slug/items
+   =============================== */
+router.get("/games/:slug/items", async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const gameDetail = await GameDetail.findOne(
-      { gameSlug: slug },
-      {
-        gameName: 1,
-        gameSlug: 1,
-        "data.itemId.itemName": 1,
-        "data.itemId.itemSlug": 1,
-        "data.itemId.sellingPrice": 1,
-        _id: 0,
-      }
-    ).lean();
+    const record = await getGameDetailBySlug(slug);
 
-    if (!gameDetail?.data?.itemId?.length) {
+    if (!record?.data?.itemId?.length) {
       return res.status(404).json({
         success: false,
         message: "Items not found for this game",
       });
     }
 
+    const items = record.data.itemId.map((item) => ({
+      itemName: item.itemName,
+      itemSlug: item.itemSlug,
+      sellingPrice: item.sellingPrice,
+    }));
+
     res.json({
       success: true,
       data: {
-        gameName: gameDetail.gameName,
-        gameSlug: gameDetail.gameSlug,
-        items: gameDetail.data.itemId.map((item) => ({
-          itemName: item.itemName,
-          itemSlug: item.itemSlug,
-          sellingPrice: item.sellingPrice,
-        })),
+        gameName: record.data.gameName,
+        gameSlug: record.data.gameSlug,
+        items,
       },
     });
   } catch (err) {
@@ -131,4 +142,5 @@ router.get("/game/:slug/items", async (req, res) => {
     });
   }
 });
+
 export default router;
