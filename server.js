@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
-import gameRoutes from "./routes/game.routes.js";
+import routes from "./routes/index.js"; // 👈 aggregated routes
 
-dotenv.config(); // ⬅️ load .env
+dotenv.config();
 
 const app = express();
 
@@ -13,7 +13,8 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api/v1", gameRoutes);
+/* ===== API ROUTES ===== */
+app.use("/api/v1", routes);
 
 app.get("/", (_, res) => {
   res.send("✅ Game API Server Running");
