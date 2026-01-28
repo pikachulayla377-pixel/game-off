@@ -3,18 +3,16 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 import GameDetail from "./models/GameDetail.js";
+
 dotenv.config();
 
 /* ===== CONFIG ===== */
 const API_BASE = process.env.API_URL_BASE;
-const API_KEY =
-process.env.API_KEY;
+const API_KEY = process.env.API_KEY;
+const MONGO_URI = process.env.MONGO_URI;
 
-const MONGO_URI =
-process.env.MONGO_URI;
 const SLUGS = [
   "mobile-legends988",
-  "mlbb-smallphp638",
   "mlbb-double332",
   "sgmy-mlbb893",
   "magic-chess-gogo-india924",
@@ -25,15 +23,23 @@ const SLUGS = [
   "value-pass-ml948",
   "genshin-impact742",
   "honor-of-kings57",
-  "wuthering-of-waves464","where-winds-meet280"
-
+  "wuthering-of-waves464",
+  "where-winds-meet280",
+  "mlbb-smallphp980",
 ];
 
 /* ===== SCRIPT ===== */
 async function dumpGameDetails() {
   try {
+    /* ===== CONNECT ===== */
     await mongoose.connect(MONGO_URI);
+    console.log("✅ MongoDB connected");
 
+    /* ===== CLEAR OLD DATA ===== */
+    const result = await GameDetail.deleteMany({});
+    console.log(`🧹 Cleared GameDetail: ${result.deletedCount} records`);
+
+    /* ===== DUMP FRESH DATA ===== */
     for (const slug of SLUGS) {
       console.log(`⏳ Dumping: ${slug}`);
 
@@ -71,10 +77,13 @@ async function dumpGameDetails() {
 
       console.log(`✅ Dumped: ${slug}`);
     }
+
+    console.log("🎉 All game details dumped successfully");
   } catch (err) {
-    console.error("❌ Dump error:", err);
+    console.error("❌ Dump error:", err.message);
   } finally {
     await mongoose.disconnect();
+    console.log("🔌 MongoDB disconnected");
     process.exit(0);
   }
 }
