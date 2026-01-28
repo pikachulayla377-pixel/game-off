@@ -44,7 +44,7 @@ router.get("/game", async (req, res) => {
 
 /* ===============================
    GET GAME LIST (NAME + SLUG)
-   GET /api/v1/game/list
+   GET /api/v1/games/list
    =============================== */
 router.get("/games/list", async (req, res) => {
   try {
@@ -90,9 +90,25 @@ router.get("/game/:slug", async (req, res) => {
       });
     }
 
+    // Clone data to avoid mutation
+    const gameData = JSON.parse(JSON.stringify(record.data));
+
+    // Apply 2% markup if items exist
+    if (Array.isArray(gameData.itemId)) {
+      gameData.itemId = gameData.itemId.map((item) => {
+        const basePrice = Number(item.sellingPrice) || 0;
+        const finalPrice = Math.round(basePrice * 1.08);
+
+        return {
+          ...item,
+          sellingPrice: finalPrice,
+        };
+      });
+    }
+
     res.json({
       success: true,
-      data: record.data,
+      data: gameData,
     });
   } catch (err) {
     console.error("Game detail error:", err);
@@ -103,9 +119,10 @@ router.get("/game/:slug", async (req, res) => {
   }
 });
 
+
 /* ===============================
    GET ITEMS BY GAME SLUG
-   GET /api/v1/game/:slug/items
+   GET /api/v1/games/:slug/items
    =============================== */
 router.get("/games/:slug/items", async (req, res) => {
   try {
@@ -120,11 +137,18 @@ router.get("/games/:slug/items", async (req, res) => {
       });
     }
 
-    const items = record.data.itemId.map((item) => ({
-      itemName: item.itemName,
-      itemSlug: item.itemSlug,
-      sellingPrice: item.sellingPrice,
-    }));
+    const items = record.data.itemId.map((item) => {
+      const basePrice = Number(item.sellingPrice) || 0;
+
+      // +2% markup and nearest round number
+      const finalPrice = Math.round(basePrice * 1.08);
+
+      return {
+        itemName: item.itemName,
+        itemSlug: item.itemSlug,
+        sellingPrice: finalPrice,
+      };
+    });
 
     res.json({
       success: true,
