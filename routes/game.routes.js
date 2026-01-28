@@ -97,7 +97,7 @@ router.get("/game/:slug", async (req, res) => {
     if (Array.isArray(gameData.itemId)) {
       gameData.itemId = gameData.itemId.map((item) => {
         const basePrice = Number(item.sellingPrice) || 0;
-        const finalPrice = Math.round(basePrice * 1.08);
+        const finalPrice = Math.round(basePrice * 1.07);
 
         return {
           ...item,
@@ -141,7 +141,7 @@ router.get("/games/:slug/items", async (req, res) => {
       const basePrice = Number(item.sellingPrice) || 0;
 
       // +2% markup and nearest round number
-      const finalPrice = Math.round(basePrice * 1.08);
+      const finalPrice = Math.round(basePrice * 1.07);
 
       return {
         itemName: item.itemName,
