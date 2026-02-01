@@ -8,11 +8,14 @@ const router = express.Router();
    CONFIG
    =============================== */
 
-const MARKUP_PERCENT = 6; // change anytime
-const MULTIPLIER = 1 + MARKUP_PERCENT / 100;
+const SELLING_MARKUP_PERCENT = 6;
+const DUMMY_MARKUP_PERCENT = 9;
+
+const SELLING_MULTIPLIER = 1 + SELLING_MARKUP_PERCENT / 100;
+const DUMMY_MULTIPLIER = 1 + DUMMY_MARKUP_PERCENT / 100;
 
 /* ===============================
-   HELPERS (SOURCE OF TRUTH)
+   HELPERS
    =============================== */
 
 const getAllGames = async () => {
@@ -25,24 +28,26 @@ const getGameDetailBySlug = async (slug) => {
   return GameDetail.findOne({ gameSlug: slug }).lean();
 };
 
-// Reusable markup function
-const applyMarkup = (price) => {
+const applySellingMarkup = (price) => {
   const base = Number(price) || 0;
-  return Math.round(base * MULTIPLIER);
+  return Math.round(base * SELLING_MULTIPLIER);
 };
 
-// Apply markup to full item
+const applyDummyMarkup = (price) => {
+  const base = Number(price) || 0;
+  return Math.round(base * DUMMY_MULTIPLIER);
+};
+
 const applyMarkupToItem = (item) => {
   return {
     ...item,
-    sellingPrice: applyMarkup(item.sellingPrice),
-    dummyPrice: applyMarkup(item.dummyPrice),
+    sellingPrice: applySellingMarkup(item.sellingPrice),
+    dummyPrice: applyDummyMarkup(item.dummyPrice),
   };
 };
 
 /* ===============================
-   GET ALL GAMES (FULL)
-   GET /api/v1/game
+   GET ALL GAMES
    =============================== */
 router.get("/game", async (req, res) => {
   try {
@@ -65,8 +70,7 @@ router.get("/game", async (req, res) => {
 });
 
 /* ===============================
-   GET GAME LIST (NAME + SLUG)
-   GET /api/v1/games/list
+   GET GAME LIST
    =============================== */
 router.get("/games/list", async (req, res) => {
   try {
@@ -97,7 +101,6 @@ router.get("/games/list", async (req, res) => {
 
 /* ===============================
    GET GAME DETAIL BY SLUG
-   GET /api/v1/game/:slug
    =============================== */
 router.get("/game/:slug", async (req, res) => {
   try {
@@ -112,10 +115,8 @@ router.get("/game/:slug", async (req, res) => {
       });
     }
 
-    // Clone safely
     const gameData = JSON.parse(JSON.stringify(record.data));
 
-    // Apply 6% markup to all items
     if (Array.isArray(gameData.itemId)) {
       gameData.itemId = gameData.itemId.map(applyMarkupToItem);
     }
@@ -135,7 +136,6 @@ router.get("/game/:slug", async (req, res) => {
 
 /* ===============================
    GET ITEMS BY GAME SLUG
-   GET /api/v1/games/:slug/items
    =============================== */
 router.get("/games/:slug/items", async (req, res) => {
   try {
