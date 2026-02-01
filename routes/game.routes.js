@@ -5,6 +5,13 @@ import GameDetail from "../models/GameDetail.js";
 const router = express.Router();
 
 /* ===============================
+   CONFIG
+   =============================== */
+
+const MARKUP_PERCENT = 6; // change anytime
+const MULTIPLIER = 1 + MARKUP_PERCENT / 100;
+
+/* ===============================
    HELPERS (SOURCE OF TRUTH)
    =============================== */
 
@@ -16,6 +23,21 @@ const getAllGames = async () => {
 
 const getGameDetailBySlug = async (slug) => {
   return GameDetail.findOne({ gameSlug: slug }).lean();
+};
+
+// Reusable markup function
+const applyMarkup = (price) => {
+  const base = Number(price) || 0;
+  return Math.round(base * MULTIPLIER);
+};
+
+// Apply markup to full item
+const applyMarkupToItem = (item) => {
+  return {
+    ...item,
+    sellingPrice: applyMarkup(item.sellingPrice),
+    dummyPrice: applyMarkup(item.dummyPrice),
+  };
 };
 
 /* ===============================
@@ -90,20 +112,12 @@ router.get("/game/:slug", async (req, res) => {
       });
     }
 
-    // Clone data to avoid mutation
+    // Clone safely
     const gameData = JSON.parse(JSON.stringify(record.data));
 
-    // Apply 2% markup if items exist
+    // Apply 6% markup to all items
     if (Array.isArray(gameData.itemId)) {
-      gameData.itemId = gameData.itemId.map((item) => {
-        const basePrice = Number(item.sellingPrice) || 0;
-        const finalPrice = Math.round(basePrice * 1.05);
-
-        return {
-          ...item,
-          sellingPrice: finalPrice,
-        };
-      });
+      gameData.itemId = gameData.itemId.map(applyMarkupToItem);
     }
 
     res.json({
@@ -118,7 +132,6 @@ router.get("/game/:slug", async (req, res) => {
     });
   }
 });
-
 
 /* ===============================
    GET ITEMS BY GAME SLUG
@@ -138,15 +151,13 @@ router.get("/games/:slug/items", async (req, res) => {
     }
 
     const items = record.data.itemId.map((item) => {
-      const basePrice = Number(item.sellingPrice) || 0;
-
-      // +2% markup and nearest round number
-      const finalPrice = Math.round(basePrice * 1.05);
+      const updated = applyMarkupToItem(item);
 
       return {
-        itemName: item.itemName,
-        itemSlug: item.itemSlug,
-        sellingPrice: finalPrice,
+        itemName: updated.itemName,
+        itemSlug: updated.itemSlug,
+        sellingPrice: updated.sellingPrice,
+        dummyPrice: updated.dummyPrice,
       };
     });
 
