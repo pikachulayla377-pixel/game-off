@@ -8,8 +8,8 @@ const router = express.Router();
    CONFIG
    =============================== */
 
-const SELLING_MARKUP_PERCENT = 6;
-const DUMMY_MARKUP_PERCENT = 9;
+const SELLING_MARKUP_PERCENT = 7;
+const DUMMY_MARKUP_PERCENT = 12;
 
 const SELLING_MULTIPLIER = 1 + SELLING_MARKUP_PERCENT / 100;
 const DUMMY_MULTIPLIER = 1 + DUMMY_MARKUP_PERCENT / 100;
