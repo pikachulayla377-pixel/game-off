@@ -28,7 +28,7 @@ const getGameDetailBySlug = async (slug) => {
 };
 
 const applySellingMarkup = (item) => {
-  const originalInr = Number(item?.resellerSellingPrice);
+  const originalInr = Number(item?.resellerSellingPrice || item?.sellingPrice);
 
   // Calculate adjusted cost based on rate ratio (e.g., 98/97)
   const adjustedCost = (originalInr / BASE_USDT_RATE) * CURRENT_USDT_RATE;
