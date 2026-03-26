@@ -8,10 +8,11 @@ const router = express.Router();
    CONFIG
    =============================== */
 
-// --- DYNAMIC CURRENCY CONFIG ---
-const BASE_USDT_RATE = 88;    // The rate used when you SAVED the 130 INR in DB
-const CURRENT_USDT_RATE = 98; // 👈 Change THIS to 98 to auto-adjust everything!
-// -------------------------------
+const SELLING_MARKUP_PERCENT = 7;
+const DUMMY_MARKUP_PERCENT = 12;
+
+const SELLING_MULTIPLIER = 1 + SELLING_MARKUP_PERCENT / 100;
+const DUMMY_MULTIPLIER = 1 + DUMMY_MARKUP_PERCENT / 100;
 
 /* ===============================
    HELPERS
@@ -27,29 +28,21 @@ const getGameDetailBySlug = async (slug) => {
   return GameDetail.findOne({ gameSlug: slug }).lean();
 };
 
-const applySellingMarkup = (item) => {
-  const originalInr = Number(item?.resellerSellingPrice);
-
-  // Calculate adjusted cost based on rate ratio (e.g., 98/97)
-  const adjustedCost = (originalInr / BASE_USDT_RATE) * CURRENT_USDT_RATE;
-
-  // No markup now, just return raw adjusted cost
-  return Math.round(adjustedCost);
+const applySellingMarkup = (price) => {
+  const base = Number(price) || 0;
+  return Math.round(base * SELLING_MULTIPLIER);
 };
 
-const applyDummyMarkup = (item) => {
-  const originalInr = Number(item?.dummyPrice) || 0;
-
-  const adjustedCost = (originalInr / BASE_USDT_RATE) * CURRENT_USDT_RATE;
-
-  return Math.round(adjustedCost);
+const applyDummyMarkup = (price) => {
+  const base = Number(price) || 0;
+  return Math.round(base * DUMMY_MULTIPLIER);
 };
 
 const applyMarkupToItem = (item) => {
   return {
     ...item,
-    sellingPrice: applySellingMarkup(item),
-    dummyPrice: applyDummyMarkup(item),
+    sellingPrice: applySellingMarkup(item.sellingPrice),
+    dummyPrice: applyDummyMarkup(item.dummyPrice),
   };
 };
 
