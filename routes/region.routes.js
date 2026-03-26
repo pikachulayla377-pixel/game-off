@@ -79,7 +79,7 @@ router.post("/check-region", async (req, res) => {
 
     const response = await fetch(url);
     const apiData = await response.json();
-    console.log("AcidGameShop Data:", apiData);
+    console.log("AcidGameShop Data:", apiData.data);
 
     const rawRegion = apiData.region || apiData.country || null;
     const processedRegion = rawRegion ? rawRegion.split(" ")[0] : null;
@@ -88,10 +88,10 @@ router.post("/check-region", async (req, res) => {
       success: 200,
       message: "Region checked successfully",
       data: {
-        username: apiData.username || apiData.name || null,
+        username: apiData.data.username || apiData.data.name || null,
         region: processedRegion,
-        user_id: apiData.user_id || apiData.userid || user_id,
-        zone: apiData.server_id || apiData.zoneid || apiData.zone || server_id,
+        user_id: apiData.data.user_id || apiData.data.userid || user_id,
+        zone: apiData.data.server_id || apiData.data.zoneid || apiData.data.zone || server_id,
         game,
       },
     });
