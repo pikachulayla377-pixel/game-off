@@ -75,22 +75,11 @@ router.post("/check-region", async (req, res) => {
       });
     }
 
-    const url = "https://classysmile.in/api/validation/region";
+    const url = `https://acidgameshop.com/api/check-region?userid=${encodeURIComponent(user_id)}&zoneid=${encodeURIComponent(server_id)}`;
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "region",
-        userid: user_id,
-        zoneid: server_id,
-      }),
-    });
-
+    const response = await fetch(url);
     const apiData = await response.json();
-    console.log("ClassySmile Data:", apiData);
+    console.log("AcidGameShop Data:", apiData);
 
     return res.status(200).json({
       success: 200,
