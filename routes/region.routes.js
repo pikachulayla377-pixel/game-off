@@ -81,14 +81,17 @@ router.post("/check-region", async (req, res) => {
     const apiData = await response.json();
     console.log("AcidGameShop Data:", apiData);
 
+    const rawRegion = apiData.region || apiData.country || null;
+    const processedRegion = rawRegion ? rawRegion.split(" ")[0] : null;
+
     return res.status(200).json({
       success: 200,
       message: "Region checked successfully",
       data: {
-        username: apiData.username || null,
-        region: apiData.country || null,
-        user_id: apiData.user_id || user_id,
-        zone: apiData.server_id || server_id,
+        username: apiData.username || apiData.name || null,
+        region: processedRegion,
+        user_id: apiData.user_id || apiData.userid || user_id,
+        zone: apiData.server_id || apiData.zoneid || apiData.zone || server_id,
         game,
       },
     });
