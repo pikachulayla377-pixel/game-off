@@ -9,8 +9,8 @@ const router = express.Router();
    =============================== */
 
 // --- DYNAMIC CURRENCY CONFIG ---
-const BASE_USDT_RATE = 90;    // The rate used when you SAVED the 130 INR in DB
-const CURRENT_USDT_RATE = 96; // 👈 Change THIS to 98 to auto-adjust everything!
+const BASE_USDT_RATE = 88;    // The rate used when you SAVED the 130 INR in DB
+const CURRENT_USDT_RATE = 98; // 👈 Change THIS to 98 to auto-adjust everything!
 // -------------------------------
 
 /* ===============================
@@ -28,7 +28,7 @@ const getGameDetailBySlug = async (slug) => {
 };
 
 const applySellingMarkup = (item) => {
-  const originalInr = Number(item?.sellingPrice) || 0;
+  const originalInr = Number(item?.resellerSellingPrice) || 0;
 
   // Calculate adjusted cost based on rate ratio (e.g., 98/97)
   const adjustedCost = (originalInr / BASE_USDT_RATE) * CURRENT_USDT_RATE;
