@@ -12,7 +12,7 @@ const SELLING_MARKUP_PERCENT = 0.5;
 const DUMMY_MARKUP_PERCENT = 5;
 
 // The price is coming at 93 INR/USD, we want it to be 98 INR/USD.
-// const USD_TO_INR_RATIO = 98 / 87;
+// const USD_TO_INR_RATIO = 99 / 87;
 const USD_TO_INR_RATIO = 1.13;
 
 const SELLING_MULTIPLIER = (1 + SELLING_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
