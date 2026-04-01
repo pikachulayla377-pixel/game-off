@@ -12,21 +12,26 @@ const API_KEY = process.env.API_KEY;
 const MONGO_URI = process.env.MONGO_URI;
 
 const SLUGS = [
+  // Mobile Legends: Bang Bang
   "mobile-legends988",
   "mlbb-double332",
-  "sgmy-mlbb893",
-  "magic-chess-gogo-india924",
-  "mlbb-indo42",
-  "mlbb-russia953",
+  "sgmy-mlbb893",           // SGMY Region
+  "mlbb-indo42",            // Indo Region
+  "mlbb-russia953",          // Russia Region
+  "mlbb-smallphp980",       // Small PHP
+  "mlbbglobal202",          // Global
 
-  "pubg-mobile138",
+  // Other Games
+  "magic-chess-gogo-india924", // Magic Chess
+  "pubg-mobile138",            // PUBG Mobile
+  "genshin-impact742",         // Genshin Impact
+  "honor-of-kings57",          // Honor of Kings
+  "wuthering-of-waves464",     // Wuthering Waves
+  "where-winds-meet280",       // Where Winds Meet
 
-  "genshin-impact742",
-  "honor-of-kings57",
-  "wuthering-of-waves464",
-  "where-winds-meet280",
-  "mlbb-smallphp980",
-  "weeklymonthly-bundle931"
+  // Bundles
+  "weeklymonthly-bundle931"    // Weekly/Monthly Bundle
+
 ];
 
 /* ===== SCRIPT ===== */

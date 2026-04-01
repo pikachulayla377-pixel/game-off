@@ -8,26 +8,35 @@ const router = express.Router();
    CONFIG
    =============================== */
 
-const SELLING_MARKUP_PERCENT = 7;
-const DUMMY_MARKUP_PERCENT = 12;
+const SELLING_MARKUP_PERCENT = 1;
+const DUMMY_MARKUP_PERCENT = 5;
 
-const SELLING_MULTIPLIER = 1 + SELLING_MARKUP_PERCENT / 100;
-const DUMMY_MULTIPLIER = 1 + DUMMY_MARKUP_PERCENT / 100;
+// The price is coming at 93 INR/USD, we want it to be 98 INR/USD.
+const USD_TO_INR_RATIO = 98 / 87;
+
+const SELLING_MULTIPLIER = (1 + SELLING_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
+const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
 
 const SLUGS = [
+  // Mobile Legends: Bang Bang
   "mobile-legends988",
   "mlbb-double332",
-  "sgmy-mlbb893",
-  "magic-chess-gogo-india924",
-  "mlbb-indo42",
-  "mlbb-russia953",
-  "pubg-mobile138",
-  "genshin-impact742",
-  "honor-of-kings57",
-  "wuthering-of-waves464",
-  "where-winds-meet280",
-  "mlbb-smallphp980",
-  "weeklymonthly-bundle931"
+  "sgmy-mlbb893",           // SGMY Region
+  "mlbb-indo42",            // Indo Region
+  "mlbb-russia953",          // Russia Region
+  "mlbb-smallphp980",       // Small PHP
+  "mlbbglobal202",          // Global
+
+  // Other Games
+  "magic-chess-gogo-india924", // Magic Chess
+  "pubg-mobile138",            // PUBG Mobile
+  "genshin-impact742",         // Genshin Impact
+  "honor-of-kings57",          // Honor of Kings
+  "wuthering-of-waves464",     // Wuthering Waves
+  "where-winds-meet280",       // Where Winds Meet
+
+  // Bundles
+  "weeklymonthly-bundle931"    // Weekly/Monthly Bundle
 ];
 
 /* ===============================
@@ -57,7 +66,7 @@ const applyDummyMarkup = (price) => {
 const applyMarkupToItem = (item) => {
   return {
     ...item,
-    sellingPrice: applySellingMarkup(item.sellingPrice),
+    sellingPrice: applySellingMarkup(item?.resellerSellingPrice),
     dummyPrice: applyDummyMarkup(item.dummyPrice),
   };
 };
