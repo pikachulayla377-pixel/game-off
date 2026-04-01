@@ -67,8 +67,8 @@ const applyDummyMarkup = (price) => {
 const applyMarkupToItem = (item) => {
   return {
     ...item,
-    sellingPrice: applySellingMarkup(item?.sellingPrice),
-    dummyPrice: applyDummyMarkup(item.dummyPrice),
+    sellingPrice: applySellingMarkup(item?.resellerSellingPrice || item?.sellingPrice),
+    dummyPrice: applyDummyMarkup(item?.dummyPrice),
   };
 };
 
