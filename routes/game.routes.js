@@ -8,12 +8,12 @@ const router = express.Router();
    CONFIG
    =============================== */
 
-const SELLING_MARKUP_PERCENT = 1;
+const SELLING_MARKUP_PERCENT = 1.5;
 const DUMMY_MARKUP_PERCENT = 5;
 
 // The price is coming at 93 INR/USD, we want it to be 98 INR/USD.
 // const USD_TO_INR_RATIO = 98 / 87;
-const USD_TO_INR_RATIO = 1.126;
+const USD_TO_INR_RATIO = 1.15;
 
 const SELLING_MULTIPLIER = (1 + SELLING_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
 const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
@@ -132,6 +132,10 @@ router.get("/game/:slug", async (req, res) => {
   try {
     const { slug } = req.params;
 
+    if (slug === "mlbb-double332") {
+      console.log(`🔍 Monitoring [${slug}] request`);
+    }
+
     const record = await getGameDetailBySlug(slug);
 
     if (!record?.data) {
@@ -145,6 +149,13 @@ router.get("/game/:slug", async (req, res) => {
 
     if (Array.isArray(gameData.itemId)) {
       gameData.itemId = gameData.itemId.map(applyMarkupToItem);
+
+      if (slug === "mlbb-double332") {
+        console.log(`✅ Monitoring [${slug}]: Applied markups to ${gameData.itemId.length} items.`);
+        if (gameData.itemId[0]) {
+          console.log(`👉 Sample Item: ${gameData.itemId[0].itemName} | Final Price: ${gameData.itemId[0].sellingPrice}`);
+        }
+      }
     }
 
     res.json({
