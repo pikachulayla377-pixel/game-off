@@ -8,7 +8,7 @@ const router = express.Router();
    CONFIG
    =============================== */
 
-const SELLING_MARKUP_PERCENT = 1.5;
+const SELLING_MARKUP_PERCENT = 1.25;
 const DUMMY_MARKUP_PERCENT = 5;
 
 // The price is coming at 93 INR/USD, we want it to be 98 INR/USD.
