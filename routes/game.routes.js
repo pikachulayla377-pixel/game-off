@@ -14,13 +14,29 @@ const DUMMY_MARKUP_PERCENT = 12;
 const SELLING_MULTIPLIER = 1 + SELLING_MARKUP_PERCENT / 100;
 const DUMMY_MULTIPLIER = 1 + DUMMY_MARKUP_PERCENT / 100;
 
+const SLUGS = [
+  "mobile-legends988",
+  "mlbb-double332",
+  "sgmy-mlbb893",
+  "magic-chess-gogo-india924",
+  "mlbb-indo42",
+  "mlbb-russia953",
+  "pubg-mobile138",
+  "genshin-impact742",
+  "honor-of-kings57",
+  "wuthering-of-waves464",
+  "where-winds-meet280",
+  "mlbb-smallphp980",
+  "weeklymonthly-bundle931"
+];
+
 /* ===============================
    HELPERS
    =============================== */
 
 const getAllGames = async () => {
   return Game.find({
-    gameSlug: { $ne: "test-1637" },
+    gameSlug: { $in: SLUGS },
   }).lean();
 };
 

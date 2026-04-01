@@ -18,9 +18,9 @@ const SLUGS = [
   "magic-chess-gogo-india924",
   "mlbb-indo42",
   "mlbb-russia953",
-  // "ph-value-pass588",
+
   "pubg-mobile138",
-  // "value-pass-ml948",
+
   "genshin-impact742",
   "honor-of-kings57",
   "wuthering-of-waves464",
