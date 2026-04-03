@@ -88,8 +88,8 @@ router.post("/check-region-acidgame", async (req, res) => {
       success: 200,
       message: "Region checked successfully",
       data: {
-        username: apiData.data.username || apiData.data.name || null,
-        region: processedRegion,
+        username: apiData.data.username || apiData.data.name || "IN",
+        region: processedRegion || "IN",
         user_id: apiData.data.user_id || apiData.data.userid || user_id,
         zone: apiData.data.server_id || apiData.data.zoneid || apiData.data.zone || server_id,
         game,
@@ -140,8 +140,8 @@ router.post("/check-region", async (req, res) => {
       success: 200,
       message: "Region checked successfully",
       data: {
-        username: resultData.username || resultData.name || null,
-        region: processedRegion,
+        username: resultData.username || resultData.name || "IN",
+        region: processedRegion || "IN",
         user_id: resultData.user_id || resultData.userid || user_id,
         zone: resultData.server_id || resultData.zoneid || resultData.zone || server_id,
         game,
