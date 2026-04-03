@@ -106,7 +106,7 @@ router.post("/check-region-acidgame", async (req, res) => {
 });
 
 
-router.post("/check-region-name", async (req, res) => {
+router.post("/check-region", async (req, res) => {
   try {
     let { user_id, server_id, id, zone, game } = req.body;
 
@@ -158,7 +158,7 @@ router.post("/check-region-name", async (req, res) => {
 });
 
 
-router.post("/check-region", async (req, res) => {
+router.post("/check-region-8", async (req, res) => {
   try {
     let { user_id, server_id, id, zone, game } = req.body;
     if (!user_id && id) user_id = id;
@@ -179,8 +179,8 @@ router.post("/check-region", async (req, res) => {
         success: 200,
         message: "Region checked successfully (Clovershop)",
         data: {
-          username: cloverJson.data.username || null,
-          region: cloverJson.data.region || null,
+          username: cloverJson.data.username || "IN",
+          region: cloverJson.data.region || "IN",
           user_id: cloverJson.data.user_id || user_id,
           zone: cloverJson.data.zone || server_id,
           game,
