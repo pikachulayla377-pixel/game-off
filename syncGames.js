@@ -39,18 +39,25 @@ async function syncGames() {
     }
 
     /* ===== INSERT FRESH DATA ===== */
-    const bulkOps = games.map((game) => ({
-      updateOne: {
-        filter: { gameSlug: game.gameSlug },
-        update: {
-          $set: {
-            ...game,
-            lastSyncedAt: new Date(),
+    const bulkOps = games.map((game) => {
+      // Rename Busan source
+      if (game.gameFrom === "Busan" || game.gameFrom === "busan") {
+        game.gameFrom = "bluebuff";
+      }
+
+      return {
+        updateOne: {
+          filter: { gameSlug: game.gameSlug },
+          update: {
+            $set: {
+              ...game,
+              lastSyncedAt: new Date(),
+            },
           },
+          upsert: true,
         },
-        upsert: true,
-      },
-    }));
+      };
+    });
 
     await Game.bulkWrite(bulkOps);
 

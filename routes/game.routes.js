@@ -27,6 +27,7 @@ const SLUGS = [
   "mlbb-russia953",          // Russia Region
   "mlbb-smallphp980",       // Small PHP
   "mlbbglobal202",          // Global
+  "mlbbtr112",              // Turkey Region
 
   // Other Games
   "magic-chess-gogo-india924", // Magic Chess
