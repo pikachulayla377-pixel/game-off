@@ -57,7 +57,7 @@ router.post("/check-region/namecheck", async (req, res) => {
           region: result.data?.region || "IN",
           user_id: result.data?.playerId || playerId,
           zone: result.data?.zoneId || zoneId || "NA",
-          valid: result.data?.valid ?? (!!result.data?.username),
+          valid: result.data?.valid,
         },
       });
     }
