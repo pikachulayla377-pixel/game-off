@@ -42,6 +42,7 @@ router.post("/check-region-xpreload", async (req, res) => {
         user_id: apiData.user_id || user_id,
         zone: apiData.server_id || server_id,
         game,
+        valid: !!apiData.username,
       },
     });
   } catch (err) {
@@ -93,6 +94,7 @@ router.post("/check-region-acidgame", async (req, res) => {
         user_id: apiData.data.user_id || apiData.data.userid || user_id,
         zone: apiData.data.server_id || apiData.data.zoneid || apiData.data.zone || server_id,
         game,
+        valid: !!(apiData.data.username || apiData.data.name),
       },
     });
   } catch (err) {
@@ -145,6 +147,7 @@ router.post("/check-region", async (req, res) => {
         user_id: resultData.user_id || resultData.userid || user_id,
         zone: resultData.server_id || resultData.zoneid || resultData.zone || server_id,
         game,
+        valid: !!(resultData.username || resultData.name),
       },
     });
   } catch (err) {
@@ -184,6 +187,7 @@ router.post("/check-region-8", async (req, res) => {
           user_id: cloverJson.data.user_id || user_id,
           zone: cloverJson.data.zone || server_id,
           game,
+          valid: !!cloverJson.data.username,
         },
       });
     }
