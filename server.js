@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-connectDB();
+await connectDB();
 
 /* ===== API ROUTES ===== */
 app.use("/api/v1", routes);
@@ -30,7 +30,7 @@ app.get("/", (_, res) => {
   res.send("✅ Game API Server Running");
 });
 
-const PORT = 8080 || process.env.PORT; // Hardcoded to 8080 for stability as per user's usual flow
+const PORT = process.env.PORT || 8080; 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
