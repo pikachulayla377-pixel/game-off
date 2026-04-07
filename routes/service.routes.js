@@ -13,18 +13,19 @@ const API_BASE_URL = process.env.API_URL_BASE || "https://1gamestopup.com/api/v1
 const API_KEY = process.env.API_KEY;
 
 /* ===============================
-   VALIDATE PLAYER
+   VALIDATE PLAYER (Name Check)
    POST /check-region/namecheck
    =============================== */
 router.post("/check-region/namecheck", async (req, res) => {
   try {
-    const { productId, playerId, zoneId, currency } = req.body;
+    const { productId, playerId, zoneId } = req.body;
 
     if (!productId || !playerId) {
       return res.status(400).json({
-        statusCode: 400,
         success: false,
+        statusCode: 400,
         message: "Missing required fields: productId and playerId",
+        data: null,
       });
     }
 
@@ -32,10 +33,10 @@ router.post("/check-region/namecheck", async (req, res) => {
     const payload = {
       productId,
       playerId,
-      zoneId, // can be omitted for single-field games
+      zoneId: zoneId || "NA", // Default to "NA" for single-field games as requested
     };
 
-    // External API call
+    // External API call to 1gamestopup
     const response = await fetch(`${API_BASE_URL}/api-service/validate`, {
       method: "POST",
       headers: {
@@ -53,18 +54,18 @@ router.post("/check-region/namecheck", async (req, res) => {
         message: result.message || "Region checked successfully",
         data: {
           username: result.data?.username || "IN",
-          region: result.data?.region || "IN", // Default to IN if not provided
+          region: result.data?.region || "IN",
           user_id: result.data?.playerId || playerId,
-          zone: result.data?.zoneId || zoneId,
-          valid: result.data?.valid ?? false,
+          zone: result.data?.zoneId || zoneId || "NA",
+          valid: result.data?.valid ?? (!!result.data?.username),
         },
       });
     }
 
-    // Error handling
-    return res.status(response.status).json({
+    // Standardised error response
+    return res.status(response.status || 400).json({
       success: false,
-      statusCode: result.statusCode || response.status,
+      statusCode: result.statusCode || response.status || 400,
       message: result.message || "Player validation failed",
       data: null,
     });
