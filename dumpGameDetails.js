@@ -91,6 +91,18 @@ async function dumpGameDetails() {
         json.data.gameFrom = "bluebuff";
       }
 
+      // Filter out unavailable items
+      if (Array.isArray(json.data.itemId)) {
+        const beforeCount = json.data.itemId.length;
+        json.data.itemId = json.data.itemId.filter(
+          (item) => item.itemAvailablity !== false
+        );
+        const removedCount = beforeCount - json.data.itemId.length;
+        if (removedCount > 0) {
+          console.log(`🚫 Removed ${removedCount} unavailable item(s) from [${slug}]`);
+        }
+      }
+
       if (slug === "mlbb-double332") {
         console.log(`🔍 DEBUG [${slug}] - Loaded ${json.data.itemId?.length} items.`);
         if (json.data.itemId?.[0]) {
