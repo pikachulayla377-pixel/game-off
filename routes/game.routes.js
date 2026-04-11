@@ -28,6 +28,7 @@ const SLUGS = [
   "mlbb-smallphp980",       // Small PHP
   "mlbbglobal202",          // Global
   "mlbbtr112",              // Turkey Region
+  "mlbbbr178",              // Brazil Region
 
   // Other Games
   "magic-chess-gogo-india924", // Magic Chess
@@ -36,6 +37,8 @@ const SLUGS = [
   "honor-of-kings57",          // Honor of Kings
   "wuthering-of-waves464",     // Wuthering Waves
   "where-winds-meet280",       // Where Winds Meet
+  "8ballpool498",              // 8 Ball Pool
+  "asphalt9877",               // Asphalt 9
 
   // Bundles
   "weeklymonthly-bundle931"    // Weekly/Monthly Bundle
