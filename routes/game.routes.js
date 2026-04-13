@@ -32,6 +32,7 @@ const SLUGS = [
 
   // Other Games
   "magic-chess-gogo-india924", // Magic Chess
+  "magicchestgogo883",         // Magic Chess Gogo
   "pubg-mobile138",            // PUBG Mobile
   "genshin-impact742",         // Genshin Impact
   "honor-of-kings57",          // Honor of Kings
