@@ -57,7 +57,7 @@ router.post("/check-region-xpreload", async (req, res) => {
 
 
 
-router.post("/check-region-acidgame", async (req, res) => {
+router.post("/check-region", async (req, res) => {
   try {
     let { user_id, server_id, id, zone, game } = req.body;
 
@@ -108,7 +108,7 @@ router.post("/check-region-acidgame", async (req, res) => {
 });
 
 
-router.post("/check-region", async (req, res) => {
+router.post("/check-region-prev", async (req, res) => {
   try {
     let { user_id, server_id, id, zone, game } = req.body;
 
