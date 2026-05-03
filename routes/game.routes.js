@@ -40,6 +40,20 @@ const SLUGS = [
   "where-winds-meet280",       // Where Winds Meet
   "8ballpool498",              // 8 Ball Pool
   "asphalt9877",               // Asphalt 9
+  "freefireglobal368",         // Free Fire Global
+  // "garenaundawn179",           // Garena Undawn
+  // "bloodstrike746",            // Blood Strike
+  // "likee349",                  // Likee
+  // "bigo339",                   // Bigo
+  // "kingshot148",               // Kingshot
+  // "aoem436",                   // Arena of Evolution: Red Tides (AoE)
+  // "starmaker908",              // StarMaker
+  // "mla504",                    // Mobile Legends: Adventure (MLA)
+  // "fifafutcoinsconsole532",    // FIFA FUT Coins Console
+  // "codmsgmy218",               // Call of Duty Mobile (SGMY)
+  // "farlight84859",             // Farlight 84
+  // "sololeveling60",            // Solo Leveling
+  // "rsm624",                    // Ragnarok Origin
 
   // Bundles
   "weeklymonthly-bundle931"    // Weekly/Monthly Bundle
