@@ -53,8 +53,8 @@ router.post("/check-region/namecheck", async (req, res) => {
         success: 200,
         message: result.message || "Region checked successfully",
         data: {
-          username: result.data?.username || "IN",
-          region: result.data?.region || "IN",
+          username: result.data?.username || "NA",
+          region: result.data?.region || "NA",
           user_id: result.data?.playerId || playerId,
           zone: result.data?.zoneId || zoneId || "NA",
           valid: result.data?.valid,
