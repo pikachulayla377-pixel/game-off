@@ -29,6 +29,7 @@ const SLUGS = [
   "mlbbglobal202",          // Global
   "mlbbtr112",              // Turkey Region
   "mlbbbr178",              // Brazil Region
+  "mobile-legends-exclusive266", // Exclusive MLBB
 
   // Other Games
   "magic-chess-gogo-india924", // Magic Chess
