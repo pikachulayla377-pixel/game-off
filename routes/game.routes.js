@@ -168,7 +168,21 @@ router.get("/game/:slug", async (req, res) => {
     const gameData = JSON.parse(JSON.stringify(record.data));
 
     if (Array.isArray(gameData.itemId)) {
+      if (slug === "mobile-legends-exclusive266") {
+        gameData.itemId = gameData.itemId.filter((item) => {
+          const id = item.itemId || item.sku || item.id || item.itemSlug;
+          if (typeof id === "string" && id.includes("_")) {
+            return false;
+          }
+          return true;
+        });
+      }
+
       gameData.itemId = gameData.itemId.map(applyMarkupToItem);
+
+      if (slug === "mobile-legends-exclusive266") {
+        gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice >= 5000);
+      }
 
       if (slug === "mlbb-double332") {
         console.log(`✅ Monitoring [${slug}]: Applied markups to ${gameData.itemId.length} items.`);
@@ -207,7 +221,18 @@ router.get("/games/:slug/items", async (req, res) => {
       });
     }
 
-    const items = record.data.itemId.map((item) => {
+    let rawItems = record.data.itemId || [];
+    if (slug === "mobile-legends-exclusive266") {
+      rawItems = rawItems.filter((item) => {
+        const id = item.itemId || item.sku || item.id || item.itemSlug;
+        if (typeof id === "string" && id.includes("_")) {
+          return false;
+        }
+        return true;
+      });
+    }
+
+    let items = rawItems.map((item) => {
       const updated = applyMarkupToItem(item);
 
       return {
@@ -217,6 +242,10 @@ router.get("/games/:slug/items", async (req, res) => {
         dummyPrice: updated.dummyPrice,
       };
     });
+
+    if (slug === "mobile-legends-exclusive266") {
+      items = items.filter((item) => item.sellingPrice >= 10000);
+    }
 
     res.json({
       success: true,
