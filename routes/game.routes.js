@@ -181,7 +181,7 @@ router.get("/game/:slug", async (req, res) => {
       gameData.itemId = gameData.itemId.map(applyMarkupToItem);
 
       if (slug === "mobile-legends-exclusive266") {
-        gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice >= 5000);
+        gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice < 5000);
       }
 
       if (slug === "mlbb-double332") {
@@ -244,7 +244,7 @@ router.get("/games/:slug/items", async (req, res) => {
     });
 
     if (slug === "mobile-legends-exclusive266") {
-      items = items.filter((item) => item.sellingPrice >= 10000);
+      items = items.filter((item) => item.sellingPrice < 5000);
     }
 
     res.json({
