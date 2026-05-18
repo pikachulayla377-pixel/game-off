@@ -21,7 +21,7 @@ const DUMP_SEC_CH_UA_PLATFORM = process.env.DUMP_SEC_CH_UA_PLATFORM;
 
 const SLUGS = [
   // Mobile Legends: Bang Bang
-  "mobile-legends988",
+  "mobile-legends270",
   "mlbb-double332",
   "sgmy-mlbb893",           // SGMY Region
   "mlbb-indo42",            // Indo Region
@@ -30,7 +30,7 @@ const SLUGS = [
   "mlbbglobal202",          // Global
   "mlbbtr112",              // Turkey Region
   "mlbbbr178",              // Brazil Region
-  "mobile-legends-exclusive266", // Exclusive MLBB
+  "mobile-legends-exclusive952", // Exclusive MLBB
 
   // Other Games
   "magic-chess-gogo-india924", // Magic Chess
@@ -57,7 +57,7 @@ const SLUGS = [
   "sololeveling60",            // Solo Leveling
   "rsm624",                    // Ragnarok Origin
   // Bundles
-  "weeklymonthly-bundle931"    // Weekly/Monthly Bundle
+  "weeklymonthly-bundle261"    // Weekly/Monthly Bundle
 
 ];
 
