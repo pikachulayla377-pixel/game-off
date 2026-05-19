@@ -168,15 +168,6 @@ router.get("/game/:slug", async (req, res) => {
     const gameData = JSON.parse(JSON.stringify(record.data));
 
     if (Array.isArray(gameData.itemId)) {
-      if (slug === "mobile-legends-exclusive952") {
-        gameData.itemId = gameData.itemId.filter((item) => {
-          const id = item.itemId || item.sku || item.id || item.itemSlug;
-          if (typeof id === "string" && id.includes("_")) {
-            return false;
-          }
-          return true;
-        });
-      }
 
       gameData.itemId = gameData.itemId.map(applyMarkupToItem);
 
@@ -222,15 +213,6 @@ router.get("/games/:slug/items", async (req, res) => {
     }
 
     let rawItems = record.data.itemId || [];
-    if (slug === "mobile-legends-exclusive952") {
-      rawItems = rawItems.filter((item) => {
-        const id = item.itemId || item.sku || item.id || item.itemSlug;
-        if (typeof id === "string" && id.includes("_")) {
-          return false;
-        }
-        return true;
-      });
-    }
 
     let items = rawItems.map((item) => {
       const updated = applyMarkupToItem(item);
