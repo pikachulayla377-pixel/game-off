@@ -168,7 +168,7 @@ router.get("/game/:slug", async (req, res) => {
     const gameData = JSON.parse(JSON.stringify(record.data));
 
     if (Array.isArray(gameData.itemId)) {
-      if (slug === "mobile-legends-exclusive266") {
+      if (slug === "mobile-legends-exclusive952") {
         gameData.itemId = gameData.itemId.filter((item) => {
           const id = item.itemId || item.sku || item.id || item.itemSlug;
           if (typeof id === "string" && id.includes("_")) {
@@ -180,7 +180,7 @@ router.get("/game/:slug", async (req, res) => {
 
       gameData.itemId = gameData.itemId.map(applyMarkupToItem);
 
-      if (slug === "mobile-legends-exclusive266") {
+      if (slug === "mobile-legends-exclusive952") {
         gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice < 5000);
       }
 
@@ -222,7 +222,7 @@ router.get("/games/:slug/items", async (req, res) => {
     }
 
     let rawItems = record.data.itemId || [];
-    if (slug === "mobile-legends-exclusive266") {
+    if (slug === "mobile-legends-exclusive952") {
       rawItems = rawItems.filter((item) => {
         const id = item.itemId || item.sku || item.id || item.itemSlug;
         if (typeof id === "string" && id.includes("_")) {
@@ -243,7 +243,7 @@ router.get("/games/:slug/items", async (req, res) => {
       };
     });
 
-    if (slug === "mobile-legends-exclusive266") {
+    if (slug === "mobile-legends-exclusive952") {
       items = items.filter((item) => item.sellingPrice < 5000);
     }
 
