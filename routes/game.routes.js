@@ -64,7 +64,7 @@ const SLUGS = [
    CUSTOM ASSETS MAPPING
    =============================== */
 const CUSTOM_GAME_IMAGES = {
-  "mobile-legends-exclusive952": "/Assets/games/exclusive-mlbb.png",
+  "mobile-legends-exclusive952": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779959176/exclusive-mlbb_jqidjv.png",
   // Add more image mappings here...
 };
 
