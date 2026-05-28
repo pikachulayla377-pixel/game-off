@@ -65,6 +65,7 @@ const SLUGS = [
    =============================== */
 const CUSTOM_GAME_IMAGES = {
   "mobile-legends-exclusive952": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779959176/exclusive-mlbb_jqidjv.png",
+  "mlbbglobal202": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779960517/global_fxfx6d.png",
   // Add more image mappings here...
 };
 
