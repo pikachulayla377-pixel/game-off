@@ -64,7 +64,7 @@ const SLUGS = [
    CUSTOM ASSETS MAPPING
    =============================== */
 const CUSTOM_GAME_IMAGES = {
-  "mobile-legends-exclusive952": "Assets/games/exclusive-mlbb.png",
+  "mobile-legends-exclusive952": "/Assets/games/exclusive-mlbb.png",
   // Add more image mappings here...
 };
 
@@ -182,6 +182,11 @@ router.get("/game/:slug", async (req, res) => {
     }
 
     const gameData = JSON.parse(JSON.stringify(record.data));
+
+    if (CUSTOM_GAME_IMAGES[slug]) {
+      if (!gameData.gameImageId) gameData.gameImageId = {};
+      gameData.gameImageId.image = CUSTOM_GAME_IMAGES[slug];
+    }
 
     if (Array.isArray(gameData.itemId)) {
 
