@@ -61,13 +61,29 @@ const SLUGS = [
 ];
 
 /* ===============================
+   CUSTOM ASSETS MAPPING
+   =============================== */
+const CUSTOM_GAME_IMAGES = {
+  "mobile-legends-exclusive952": "Assets/games/exclusive-mlbb.png",
+  // Add more image mappings here...
+};
+
+/* ===============================
    HELPERS
    =============================== */
 
 const getAllGames = async () => {
-  return Game.find({
+  const games = await Game.find({
     gameSlug: { $in: SLUGS },
   }).lean();
+
+  return games.map((game) => {
+    if (game.gameSlug && CUSTOM_GAME_IMAGES[game.gameSlug]) {
+      if (!game.gameImageId) game.gameImageId = {};
+      game.gameImageId.image = CUSTOM_GAME_IMAGES[game.gameSlug];
+    }
+    return game;
+  });
 };
 
 const getGameDetailBySlug = async (slug) => {
