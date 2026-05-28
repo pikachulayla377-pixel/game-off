@@ -66,9 +66,9 @@ const SLUGS = [
 const CUSTOM_GAME_IMAGES = {
   "mobile-legends-exclusive952": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779959176/exclusive-mlbb_jqidjv.png",
   "mlbbglobal202": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779960517/global_fxfx6d.png",
-  "mlbbbr178": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779960804/brazil-mlbb_rcjsfy.png",
+  "mlbbbr178": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779962974/brazil-mlbb_rcjsfy.png",
   "mlbbtr112": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779961064/mlbb-turkey_rsfqfc.png",
-  "mlbb-double332": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779962677/double-dias_dqv4qg.png",
+  "mlbb-double332": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779966871/double-dias_dqv4qg.png",
   // Add more game image mappings here...
 };
 
