@@ -68,7 +68,12 @@ const CUSTOM_GAME_IMAGES = {
   "mlbbglobal202": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779960517/global_fxfx6d.png",
   "mlbbbr178": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779960804/brazil-mlbb_rcjsfy.png",
   "mlbbtr112": "https://res.cloudinary.com/dtnu1hlq9/image/upload/q_auto/f_auto/v1779961064/mlbb-turkey_rsfqfc.png",
-  // Add more image mappings here...
+  // Add more game image mappings here...
+};
+
+const CUSTOM_ITEM_IMAGES = {
+  // "mlbb-double332": "https://res.cloudinary.com/.../new-item.png",
+  // Add more item image mappings here to change ALL items for a game...
 };
 
 /* ===============================
@@ -193,7 +198,22 @@ router.get("/game/:slug", async (req, res) => {
 
     if (Array.isArray(gameData.itemId)) {
 
-      gameData.itemId = gameData.itemId.map(applyMarkupToItem);
+      gameData.itemId = gameData.itemId.map(item => {
+        const updated = applyMarkupToItem(item);
+        
+        // If there's a specific custom item image, use it for all items
+        if (CUSTOM_ITEM_IMAGES[slug]) {
+          if (!updated.itemImageId) updated.itemImageId = {};
+          updated.itemImageId.image = CUSTOM_ITEM_IMAGES[slug];
+        } 
+        // Otherwise fallback to custom game image if present
+        else if (CUSTOM_GAME_IMAGES[slug]) {
+          if (!updated.itemImageId) updated.itemImageId = {};
+          updated.itemImageId.image = CUSTOM_GAME_IMAGES[slug];
+        }
+        
+        return updated;
+      });
 
       if (slug === "mobile-legends-exclusive952") {
         gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice < 5000);
@@ -241,11 +261,19 @@ router.get("/games/:slug/items", async (req, res) => {
     let items = rawItems.map((item) => {
       const updated = applyMarkupToItem(item);
 
+      let itemImageId = item.itemImageId;
+      if (CUSTOM_ITEM_IMAGES[slug]) {
+        itemImageId = { image: CUSTOM_ITEM_IMAGES[slug] };
+      } else if (CUSTOM_GAME_IMAGES[slug]) {
+        itemImageId = { image: CUSTOM_GAME_IMAGES[slug] };
+      }
+
       return {
         itemName: updated.itemName,
         itemSlug: updated.itemSlug,
         sellingPrice: updated.sellingPrice,
         dummyPrice: updated.dummyPrice,
+        itemImageId: itemImageId,
       };
     });
 
