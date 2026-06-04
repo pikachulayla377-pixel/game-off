@@ -119,6 +119,21 @@ const applyMarkupToItem = (item) => {
   };
 };
 
+const filterDuplicateItems = (items) => {
+  const uniqueItems = new Map();
+  for (const item of items) {
+    if (!uniqueItems.has(item.itemSlug)) {
+      uniqueItems.set(item.itemSlug, item);
+    } else {
+      const existingItem = uniqueItems.get(item.itemSlug);
+      if ((item.sellingPrice || 0) < (existingItem.sellingPrice || 0)) {
+        uniqueItems.set(item.itemSlug, item);
+      }
+    }
+  }
+  return Array.from(uniqueItems.values());
+};
+
 /* ===============================
    GET ALL GAMES
    =============================== */
@@ -222,6 +237,8 @@ router.get("/game/:slug", async (req, res) => {
         gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice < 5000);
       }
 
+      gameData.itemId = filterDuplicateItems(gameData.itemId);
+
       if (slug === "mlbb-double332") {
         console.log(`✅ Monitoring [${slug}]: Applied markups to ${gameData.itemId.length} items.`);
         if (gameData.itemId[0]) {
@@ -283,6 +300,8 @@ router.get("/games/:slug/items", async (req, res) => {
     if (slug === "mobile-legends-exclusive952") {
       items = items.filter((item) => item.sellingPrice < 5000);
     }
+
+    items = filterDuplicateItems(items);
 
     res.json({
       success: true,

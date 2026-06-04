@@ -24,9 +24,9 @@ const SLUGS = [
   "mobile-legends270",
   "mlbb-double332",
   "sgmy-mlbb893",           // SGMY Region
-  "mlbb-indo42",            // Indo Region
-  "mlbb-russia953",          // Russia Region
-  "mlbb-smallphp980",       // Small PHP
+  // "mlbb-indo42",            // Indo Region
+  // "mlbb-russia953",          // Russia Region
+  // "mlbb-smallphp980",       // Small PHP
   "mlbbglobal202",          // Global
   "mlbbtr112",              // Turkey Region
   "mlbbbr178",              // Brazil Region
