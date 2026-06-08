@@ -234,7 +234,7 @@ router.get("/game/:slug", async (req, res) => {
       });
 
       if (slug === "mobile-legends-exclusive952") {
-        gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice < 5000);
+        gameData.itemId = gameData.itemId.filter((item) => item.sellingPrice < 5000 && item.itemSlug !== "mlbb_exclusive_limited-time_value_pack");
       }
 
       gameData.itemId = filterDuplicateItems(gameData.itemId);
@@ -298,7 +298,7 @@ router.get("/games/:slug/items", async (req, res) => {
     });
 
     if (slug === "mobile-legends-exclusive952") {
-      items = items.filter((item) => item.sellingPrice < 5000);
+      items = items.filter((item) => item.sellingPrice < 5000 && item.itemSlug !== "mlbb_exclusive_limited-time_value_pack");
     }
 
     items = filterDuplicateItems(items);
