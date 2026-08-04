@@ -57,8 +57,10 @@ const SLUGS = [
   "sololeveling60",            // Solo Leveling
   "rsm624",                    // Ragnarok Origin
   // Bundles
-  "weeklymonthly-bundle261"    // Weekly/Monthly Bundle
+  "weeklymonthly-bundle261"  ,  // Weekly/Monthly Bundle
 
+
+  "bgmi226"
 ];
 
 /* ===== SCRIPT ===== */

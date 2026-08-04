@@ -43,7 +43,7 @@ const SLUGS = [
   "asphalt9877",               // Asphalt 9
   "freefireglobal368",         // Free Fire Global
   // "garenaundawn179",           // Garena Undawn
-  // "bloodstrike746",            // Blood Strike
+  "bloodstrike746",            // Blood Strike
   // "likee349",                  // Likee
   // "bigo339",                   // Bigo
   // "kingshot148",               // Kingshot
@@ -57,7 +57,9 @@ const SLUGS = [
   // "rsm624",                    // Ragnarok Origin
 
   // Bundles
-  "weeklymonthly-bundle261"    // Weekly/Monthly Bundle
+  "weeklymonthly-bundle261"  ,  // Weekly/Monthly Bundle
+
+  "bgmi226" // BGMI
 ];
 
 /* ===============================
