@@ -42,7 +42,7 @@ const SLUGS = [
   "8ballpool498",              // 8 Ball Pool
   "asphalt9877",               // Asphalt 9
   "freefireglobal368",         // Free Fire Global
-  // "garenaundawn179",           // Garena Undawn
+  "garenaundawn179",           // Garena Undawn
   "bloodstrike746",            // Blood Strike
   // "likee349",                  // Likee
   // "bigo339",                   // Bigo
