@@ -59,7 +59,8 @@ const SLUGS = [
   // Bundles
   "weeklymonthly-bundle261"  ,  // Weekly/Monthly Bundle
 
-  "bgmi226" // BGMI
+  "bgmi226",
+  "mobile-legends-philippines888" // BGMI
 ];
 
 /* ===============================

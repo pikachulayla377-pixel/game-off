@@ -60,7 +60,8 @@ const SLUGS = [
   "weeklymonthly-bundle261"  ,  // Weekly/Monthly Bundle
 
 
-  "bgmi226"
+  "bgmi226",
+  "mobile-legends-philippines888"
 ];
 
 /* ===== SCRIPT ===== */
