@@ -21,7 +21,7 @@ const DUMP_SEC_CH_UA_PLATFORM = process.env.DUMP_SEC_CH_UA_PLATFORM;
 
 const SLUGS = [
   // Mobile Legends: Bang Bang
-  "mobile-legends270",
+  // "mobile-legends270",
   "mobile-legends114",
   "mobile-legends-united-states41",
   "mlbb-double332",
@@ -38,7 +38,7 @@ const SLUGS = [
   "magic-chess-gogo-india924", // Magic Chess
   "magicchestgogo883",         // Magic Chess Gogo
   "pubg-mobile138",            // PUBG Mobile
-  "genshin-impact742",         // Genshin Impact
+  "genshin-impact265",         // Genshin Impact
   "honor-of-kings57",          // Honor of Kings
   "wuthering-of-waves464",     // Wuthering Waves
   "where-winds-meet280",       // Where Winds Meet
@@ -126,12 +126,7 @@ async function dumpGameDetails() {
         }
       }
 
-      if (slug === "mlbb-double332") {
-        console.log(`🔍 DEBUG [${slug}] - Loaded ${json.data.itemId?.length} items.`);
-        if (json.data.itemId?.[0]) {
-          console.log(`🎁 Full structure of first item:`, JSON.stringify(json.data.itemId[0], null, 2));
-        }
-      }
+
 
       await GameDetail.updateOne(
         { gameSlug: slug },

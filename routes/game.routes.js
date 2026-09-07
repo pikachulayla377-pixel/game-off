@@ -20,7 +20,7 @@ const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
 
 const SLUGS = [
   // Mobile Legends: Bang Bang
-  "mobile-legends270",
+  // "mobile-legends270",
   "mobile-legends114",
   "mobile-legends-united-states41",
   "mlbb-double332",
@@ -37,7 +37,7 @@ const SLUGS = [
   "magic-chess-gogo-india924", // Magic Chess
   "magicchestgogo883",         // Magic Chess Gogo
   "pubg-mobile138",            // PUBG Mobile
-  "genshin-impact742",         // Genshin Impact
+  "genshin-impact265",         // Genshin Impact
   "honor-of-kings57",          // Honor of Kings
   "wuthering-of-waves464",     // Wuthering Waves
   "where-winds-meet280",       // Where Winds Meet
