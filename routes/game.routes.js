@@ -21,6 +21,7 @@ const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
 const SLUGS = [
   // Mobile Legends: Bang Bang
   "mobile-legends270",
+  "mobile-legends114",
   "mlbb-double332",
   "sgmy-mlbb893",           // SGMY Region
   "mlbb-indo42",            // Indo Region

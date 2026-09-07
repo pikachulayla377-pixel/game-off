@@ -22,6 +22,7 @@ const DUMP_SEC_CH_UA_PLATFORM = process.env.DUMP_SEC_CH_UA_PLATFORM;
 const SLUGS = [
   // Mobile Legends: Bang Bang
   "mobile-legends270",
+  "mobile-legends114",
   "mlbb-double332",
   "sgmy-mlbb893",           // SGMY Region
   // "mlbb-indo42",            // Indo Region
