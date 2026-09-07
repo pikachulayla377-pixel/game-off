@@ -59,7 +59,7 @@ const SLUGS = [
   // "rsm624",                    // Ragnarok Origin
 
   // Bundles
-  "weeklymonthly-bundle261"  ,  // Weekly/Monthly Bundle
+  "weeklymonthly-bundle468"  ,  // Weekly/Monthly Bundle
 
   "bgmi226",
   "mobile-legends-philippines888" // BGMI
