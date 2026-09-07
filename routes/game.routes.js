@@ -19,50 +19,40 @@ const SELLING_MULTIPLIER = (1 + SELLING_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO
 const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
 
 const SLUGS = [
-  // Mobile Legends: Bang Bang
-  // "mobile-legends270",
+  // Mobile Legends
   "mobile-legends114",
   "mobile-legends-united-states41",
   "mlbb-double332",
-  "sgmy-mlbb893",           // SGMY Region
-  "mlbb-indo42",            // Indo Region
-  "mlbb-russia953",          // Russia Region
-  "mlbb-smallphp980",       // Small PHP
-  "mlbbglobal202",          // Global
-  "mlbbtr112",              // Turkey Region
-  "mlbbbr178",              // Brazil Region
-  "mobile-legends-exclusive952", // Exclusive MLBB
+  "sgmy-mlbb893",
+  "mlbb-indo42",
+  "mlbb-russia46",
+ 
+  "mlbbglobal202",
+  "mlbbtr112",
+  "mlbbbr178",
+  "mobile-legends-exclusive952",
+    "mobile-legends-philippines888",
 
-  // Other Games
-  "magic-chess-gogo-india924", // Magic Chess
-  "magicchestgogo883",         // Magic Chess Gogo
-  "pubg-mobile138",            // PUBG Mobile
-  "genshin-impact265",         // Genshin Impact
-  "honor-of-kings57",          // Honor of Kings
-  "wuthering-of-waves464",     // Wuthering Waves
-  "where-winds-meet280",       // Where Winds Meet
-  "8ballpool498",              // 8 Ball Pool
-  "asphalt9877",               // Asphalt 9
-  "freefireglobal368",         // Free Fire Global
-  "garenaundawn179",           // Garena Undawn
-  "bloodstrike746",            // Blood Strike
-  // "likee349",                  // Likee
-  // "bigo339",                   // Bigo
-  // "kingshot148",               // Kingshot
-  // "aoem436",                   // Arena of Evolution: Red Tides (AoE)
-  // "starmaker908",              // StarMaker
-  // "mla504",                    // Mobile Legends: Adventure (MLA)
-  // "fifafutcoinsconsole532",    // FIFA FUT Coins Console
-  // "codmsgmy218",               // Call of Duty Mobile (SGMY)
-  // "farlight84859",             // Farlight 84
-  // "sololeveling60",            // Solo Leveling
-  // "rsm624",                    // Ragnarok Origin
+  // Other games
+  "magic-chess-gogo-india924",
+  "magicchestgogo883",
 
-  // Bundles
-  "weeklymonthly-bundle468"  ,  // Weekly/Monthly Bundle
+  "genshin-impact265",
+  "honor-of-kings57",
+  "wuthering-of-waves464",
+  "where-winds-meet280",
+  "8ballpool498",
+  "asphalt9877",
+  "freefireglobal368",
+  "garenaundawn179",
+  "bloodstrike746",
 
+  // Bundles and additional games
+  "weeklymonthly-bundle468",
+  // PUBG and BGMI
   "bgmi226",
-  "mobile-legends-philippines888" // BGMI
+    "pubg-mobile138",
+
 ];
 
 /* ===============================
