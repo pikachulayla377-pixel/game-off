@@ -189,10 +189,6 @@ router.get("/game/:slug", async (req, res) => {
   try {
     const { slug } = req.params;
 
-    if (slug === "mlbb-double332") {
-      console.log(`🔍 Monitoring [${slug}] request`);
-    }
-
     const record = await getGameDetailBySlug(slug);
 
     if (!record?.data) {
@@ -233,13 +229,6 @@ router.get("/game/:slug", async (req, res) => {
       }
 
       gameData.itemId = filterDuplicateItems(gameData.itemId);
-
-      if (slug === "mlbb-double332") {
-        console.log(`✅ Monitoring [${slug}]: Applied markups to ${gameData.itemId.length} items.`);
-        if (gameData.itemId[0]) {
-          console.log(`👉 Sample Item: ${gameData.itemId[0].itemName} | Final Price: ${gameData.itemId[0].sellingPrice}`);
-        }
-      }
     }
 
     res.json({
