@@ -19,53 +19,7 @@ const DUMP_SEC_CH_UA = process.env.DUMP_SEC_CH_UA;
 const DUMP_SEC_CH_UA_MOBILE = process.env.DUMP_SEC_CH_UA_MOBILE;
 const DUMP_SEC_CH_UA_PLATFORM = process.env.DUMP_SEC_CH_UA_PLATFORM;
 
-const SLUGS = [
-  // Mobile Legends
-  "mobile-legends114",
-  "mobile-legends-united-states41",
-  "mlbb-double332",
-  "sgmy-mlbb893",
-  "mlbbglobal202",
-  "mlbbtr112",
-  "mlbbbr178",
-  "mobile-legends-exclusive952",
-  "mlbb-russia46",
-  "mobile-legends-philippines888",
-
-  // Other games
-  // "magic-chess-gogo-india924",
-  "magicchestgogo883",
-  
-  "genshin-impact265",
-  "honor-of-kings57",
-  "wuthering-of-waves464",
-  "where-winds-meet280",
-  "8ballpool498",
-  "asphalt9877",
-  "freefireglobal368",
-  "garenaundawn179",
-  "bloodstrike746",
-  "likee349",
-  "bigo339",
-  "kingshot148",
-  "aoem436",
-  "starmaker908",
-  "mla504",
-  "fifafutcoinsconsole532",
-  "codmsgmy218",
-  "farlight84859",
-  "sololeveling60",
-  "rsm624",
-
-  // Bundles and additional games
-  "weeklymonthly-bundle646",
-
-  //PUBG and BGMI
-  "bgmi226",
-  "pubg-mobile138",
-
-  
-];
+import { SLUGS } from "./config/games.config.js";
 
 /* ===== SCRIPT ===== */
 async function dumpGameDetails() {
