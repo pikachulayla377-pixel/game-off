@@ -34,7 +34,7 @@ const SLUGS = [
     "mobile-legends-philippines888",
 
   // Other games
-  "magic-chess-gogo-india924",
+  // "magic-chess-gogo-india924",
   "magicchestgogo883",
 
   "genshin-impact265",
@@ -48,7 +48,7 @@ const SLUGS = [
   "bloodstrike746",
 
   // Bundles and additional games
-  "weeklymonthly-bundle468",
+  "weeklymonthly-bundle646",
   // PUBG and BGMI
   "bgmi226",
     "pubg-mobile138",
