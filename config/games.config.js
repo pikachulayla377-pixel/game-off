@@ -16,6 +16,7 @@ export const SLUGS = [
   "mlbbbr178",
   "mobile-legends-exclusive952",
   "mobile-legends-philippines888",
+  "value-pass-ml838",
 
   // Other Popular Games
   "magicchestgogo883",
