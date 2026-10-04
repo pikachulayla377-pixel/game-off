@@ -9,7 +9,7 @@ export const SLUGS = [
   "mobile-legends-united-states41",
   "mlbb-double332",
   "sgmy-mlbb893",
-  "mlbb-indo42",
+
   "mlbb-russia46",
   "mlbbglobal202",
   "mlbbtr112",
@@ -17,6 +17,7 @@ export const SLUGS = [
   "mobile-legends-exclusive952",
   "mobile-legends-philippines888",
   "value-pass-ml838",
+  "mlbbph643",
 
   // Other Popular Games
   "magicchestgogo883",
@@ -39,7 +40,8 @@ export const SLUGS = [
   "codmsgmy218",
   "farlight84859",
   "sololeveling60",
-  "rsm624",
+  "rsm624", 
+  "roblox7" ,
 
   // Bundles & Battle Royales
   "weeklymonthly-bundle646",
