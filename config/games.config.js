@@ -47,6 +47,9 @@ export const SLUGS = [
   "weeklymonthly-bundle646",
   "bgmi226",
   "pubg-mobile138",
+
+
+  "flash-weekly621"
 ];
 
 /* ===============================
