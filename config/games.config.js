@@ -72,7 +72,7 @@ export const CUSTOM_ITEM_IMAGES = {};
    =============================== */
 export const SELLING_MARKUP_PERCENT = 0.5;
 export const DUMMY_MARKUP_PERCENT = 5;
-export const USD_TO_INR_RATIO = 1.139;
+export const USD_TO_INR_RATIO = 1.135;
 
 export const SELLING_MULTIPLIER = (1 + SELLING_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
 export const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
