@@ -5,19 +5,21 @@
 
 export const SLUGS = [
   // Mobile Legends
-  "mobile-legends114",
+  "mobile-legends114", 
   "mobile-legends-united-states41",
   "mlbb-double332",
   "sgmy-mlbb893",
-
   "mlbb-russia46",
   "mlbbglobal202",
   "mlbbtr112",
-  "mlbbbr178",
+//   "mlbbbr178",
   "mobile-legends-exclusive952",
-  "mobile-legends-philippines888",
+  "mobile-legends-philippines888", //philipins
   "value-pass-ml838",
-  "mlbbph643",
+
+  "mlbbid35" ,//indo
+  "mlbbph643",//ph
+  "mlbbsgmy885",//sg
 
   // Other Popular Games
   "magicchestgogo883",
@@ -41,15 +43,17 @@ export const SLUGS = [
   "farlight84859",
   "sololeveling60",
   "rsm624", 
+
+  // roblox
   "roblox7" ,
 
   // Bundles & Battle Royales
   "weeklymonthly-bundle646",
+  // pubg bgmi
   "bgmi226",
   "pubg-mobile138",
 
 
-  "flash-weekly621"
 ];
 
 /* ===============================
