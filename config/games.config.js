@@ -12,7 +12,7 @@ export const SLUGS = [
   "mlbb-russia46",
   "mlbbglobal202",
   "mlbbtr112",
-//   "mlbbbr178",
+
   "mobile-legends-exclusive952",
   "mobile-legends-philippines888", //philipins
   "value-pass-ml838",
