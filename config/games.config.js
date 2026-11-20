@@ -52,6 +52,7 @@ export const SLUGS = [
   // pubg bgmi
   "bgmi226",
   "pubg-mobile138",
+  "mlbbindia929"
 
 
 ];
