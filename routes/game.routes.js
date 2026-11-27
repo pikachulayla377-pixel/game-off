@@ -8,8 +8,8 @@ import {
   SLUGS,
   CUSTOM_GAME_IMAGES,
   CUSTOM_ITEM_IMAGES,
-  SELLING_MULTIPLIER,
-  DUMMY_MULTIPLIER,
+  getSellingMultiplier,
+  getDummyMultiplier,
 } from "../config/games.config.js";
 
 /* ===============================
@@ -36,12 +36,12 @@ const getGameDetailBySlug = async (slug) => {
 
 const applySellingMarkup = (price) => {
   const base = Number(price) || 0;
-  return Math.round(base * SELLING_MULTIPLIER);
+  return Math.round(base * getSellingMultiplier());
 };
 
 const applyDummyMarkup = (price) => {
   const base = Number(price) || 0;
-  return Math.round(base * DUMMY_MULTIPLIER);
+  return Math.round(base * getDummyMultiplier());
 };
 
 const applyMarkupToItem = (item) => {

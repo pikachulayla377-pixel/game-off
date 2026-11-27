@@ -1,11 +1,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import { connectDB } from "./config/db.js";
 import routes from "./routes/index.js";
 
 dotenv.config();
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 app.use(cors());
@@ -26,11 +29,19 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get("/admin", (_, res) => {
+  res.sendFile(path.join(__dirname, "public", "admin.html"));
+});
+
+app.get("/admin/pricing", (_, res) => {
+  res.sendFile(path.join(__dirname, "public", "pricing.html"));
+});
+
 app.get("/", (_, res) => {
   res.send("✅ Game API Server Running");
 });
 
-const PORT = process.env.PORT || 8080; 
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

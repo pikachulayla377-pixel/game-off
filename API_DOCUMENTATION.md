@@ -1,30 +1,31 @@
-# 🎮 Game API Reference
+# Website API Reference
 
-**Base URL:** `http://localhost:8080/api/v1`
-
----
-
-## 📌 Quick Summary
-
-| Method | Endpoint | Purpose | Request Body / Param |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/` | Health check | None |
-| `GET` | `/game` | Get all games (full data + images) | None |
-| `GET` | `/games/list` | Get slim games list (for dropdowns/search) | None |
-| `GET` | `/game/:slug` | Get full game details & items with prices | `slug` in URL |
-| `GET` | `/games/:slug/items` | Get only items & prices for a game | `slug` in URL |
-| `POST` | `/check-region` | **(Main)** Check player name & region | JSON (`user_id`, `server_id`) |
-| `POST` | `/check-region/namecheck` | Validate player name via 1GameStopUp | JSON (`productId`, `playerId`, `zoneId`) |
-| `POST` | `/check` | Check player via Busan gateway | JSON (`user_id`, `server_id`, `game`) |
+**Base URL:** `http://localhost:8081/api/v1` *(uses `PORT` from `.env`, defaults to `8080`)*  
+**Health Check:** `GET http://localhost:8081/` → `"✅ Game API Server Running"`
 
 ---
 
-## 1. 🕹️ Game Endpoints
+## Endpoints at a Glance
 
-### 1.1 `GET /api/v1/game`
-* **Why use it:** Loads the main storefront/homepage with all enabled games, logos, and banners.
-* **Payload:** None
-* **Sample Response:**
+| Method | Endpoint | Where to Use on Website |
+| :--- | :--- | :--- |
+| `GET` | `/game` | Homepage / Storefront (all games + images) |
+| `GET` | `/games/list` | Search bar / Dropdowns (names & slugs only) |
+| `GET` | `/game/:slug` | Game product page (items, prices, input fields) |
+| `GET` | `/games/:slug/items` | Cart / Pricing table (items & prices only) |
+| `POST` | `/check-region` | Checkout / Player verification (auto-fallback) |
+| `POST` | `/check-region/namecheck` | Multi-game player name check (1GameStopUp) |
+| `POST` | `/check` | Direct player check (Busan gateway) |
+| `POST` | `/admin/sync-dump` | Admin form trigger for sync & dump |
+
+---
+
+## 1. Games & Products
+
+### `GET /api/v1/game`
+Load all enabled games with images for the homepage/storefront.
+
+**Response:**
 ```json
 {
   "success": true,
@@ -41,12 +42,10 @@
 }
 ```
 
----
+### `GET /api/v1/games/list`
+Lightweight list of game names and slugs (no images) for search bars or dropdowns.
 
-### 1.2 `GET /api/v1/games/list`
-* **Why use it:** Super fast, lightweight list for search bars or dropdown menus (no heavy images).
-* **Payload:** None
-* **Sample Response:**
+**Response:**
 ```json
 {
   "success": true,
@@ -60,13 +59,12 @@
 }
 ```
 
----
+### `GET /api/v1/game/:slug`
+Full details for a single game page, including required player inputs (`User ID`, `Zone ID`, etc.) and items with calculated prices.
 
-### 1.3 `GET /api/v1/game/:slug`
-* **Why use it:** Loads the full product page for a single game (shows items, calculated selling prices, input fields like User ID / Zone ID).
-* **URL Parameter:** `slug` (e.g. `mobile-legends114`, `mlbb-double332`, `genshin-impact265`)
-* **Payload:** None
-* **Sample Response:**
+**Example:** `GET /api/v1/game/mobile-legends114`
+
+**Response:**
 ```json
 {
   "success": true,
@@ -89,13 +87,12 @@
 }
 ```
 
----
+### `GET /api/v1/games/:slug/items`
+Only the items and prices for a game (useful for cart validation or price tables).
 
-### 1.4 `GET /api/v1/games/:slug/items`
-* **Why use it:** Quick access to just the pricing & item catalog for a specific game (useful for carts or simple pricing tables).
-* **URL Parameter:** `slug` (e.g. `mobile-legends114`)
-* **Payload:** None
-* **Sample Response:**
+**Example:** `GET /api/v1/games/mobile-legends114/items`
+
+**Response:**
 ```json
 {
   "success": true,
@@ -116,15 +113,16 @@
 
 ---
 
-## 2. 🔍 Player & Region Verification Endpoints
+## 2. Player & Region Verification
 
-### 2.1 `POST /api/v1/check-region` *(Smart Multi-Provider Fallback)*
-* **Why use it:** Verifies player existence, retrieves in-game nickname, and detects account region before checkout. It automatically tries providers in sequence if any fail or time out:
-  1. 🥇 **AcidGameShop**
-  2. 🥈 **XPreloads**
-  3. 🥉 **DigitalTopup**
-  4. 🏅 **CloverShop**
-* **Request Body:**
+> **Accepted Field Aliases:**  
+> - User ID: `user_id`, `id`, or `playerId`  
+> - Server/Zone ID: `server_id`, `zone`, or `zoneId`
+
+### `POST /api/v1/check-region` *(Recommended)*
+Verifies a player's username and region. Automatically falls back across 4 providers in order: `AcidGameShop` → `XPreloads` → `DigitalTopup` → `CloverShop`.
+
+**Body:**
 ```json
 {
   "user_id": "391069103",
@@ -132,9 +130,8 @@
   "game": "mlbb"
 }
 ```
-*(Aliases supported: `id` / `playerId` for `user_id`, `zone` / `zoneId` for `server_id`)*
 
-* **Sample Response:**
+**Success Response:**
 ```json
 {
   "success": 200,
@@ -151,11 +148,12 @@
 }
 ```
 
----
+*(Legacy aliases `/check-region-xpreload`, `/check-region-prev`, and `/check-region-8` point to this same endpoint.)*
 
-### 2.2 `POST /api/v1/check-region/namecheck`
-* **Why use it:** Multi-game player name check via 1GameStopUp provider.
-* **Request Body:**
+### `POST /api/v1/check-region/namecheck`
+Validates a player name across supported games via 1GameStopUp.
+
+**Body:**
 ```json
 {
   "productId": "mobile-legends",
@@ -163,8 +161,9 @@
   "zoneId": "2415"
 }
 ```
+*(Also accepts `game` instead of `productId`; `zoneId` defaults to `"NA"` if omitted.)*
 
-* **Sample Response:**
+**Success Response:**
 ```json
 {
   "success": 200,
@@ -179,11 +178,10 @@
 }
 ```
 
----
+### `POST /api/v1/check`
+Direct player check via the Busan gateway (`BUSAN_BASE_URL`).
 
-### 2.3 `POST /api/v1/check`
-* **Why use it:** Direct verification gateway using the Busan provider API.
-* **Request Body:**
+**Body:**
 ```json
 {
   "user_id": "391069103",
@@ -191,8 +189,9 @@
   "game": "mlbb"
 }
 ```
+*(`game` defaults to `"mlbb"`, and `server_id` is optional.)*
 
-* **Sample Response:**
+**Success Response:**
 ```json
 {
   "success": true,
@@ -204,5 +203,32 @@
 
 ---
 
-## 3. 🔄 Legacy Route Aliases
-For backward compatibility, the old separate endpoints (`/check-region-xpreload`, `/check-region-prev`, `/check-region-8`) all route to the same unified fallback engine.
+## 3. Admin (Sync & Dump)
+
+### `POST /api/v1/admin/sync-dump`
+Triggers game sync (`syncGames`) and/or game details dump (`dumpGameDetails`) remotely from an admin form.
+
+**Headers:**
+```
+x-admin-key: <ADMIN_SECRET from .env>
+```
+
+**Body:**
+```json
+{
+  "authorization": "Bearer eyJhbG...",
+  "cookie": "refreshToken=...; accessToken=...",
+  "runSync": true,
+  "runDump": true
+}
+```
+*(`authorization` and `cookie` fall back to `.env` if omitted; `runSync` and `runDump` default to `true`.)*
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "sync": { "deletedCount": 20, "syncedCount": 20 },
+  "dump": { "deletedCount": 20, "totalSlugs": 20, "dumpedCount": 20, "failedCount": 0, "failed": [] }
+}
+```

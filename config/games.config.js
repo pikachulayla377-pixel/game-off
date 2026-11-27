@@ -3,6 +3,13 @@
    Centralized configuration for all games, custom assets, and pricing markups.
    =============================== */
 
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PRICING_FILE = path.join(__dirname, "pricing.json");
+
 export const SLUGS = [
   // Mobile Legends
   "mobile-legends114", 
@@ -53,8 +60,6 @@ export const SLUGS = [
   "bgmi226",
   "pubg-mobile138",
   "mlbbindia929"
-
-
 ];
 
 /* ===============================
@@ -75,9 +80,95 @@ export const CUSTOM_ITEM_IMAGES = {};
 /* ===============================
    PRICING MARKUP CONFIG
    =============================== */
-export const SELLING_MARKUP_PERCENT = 0.5;
-export const DUMMY_MARKUP_PERCENT = 5;
-export const USD_TO_INR_RATIO = 1.139;
+const DEFAULT_PRICING = {
+  usdToInrRatio: 1.139,
+  sellingMarkupPercent: 0.5,
+  dummyMarkupPercent: 5,
+};
 
-export const SELLING_MULTIPLIER = (1 + SELLING_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
-export const DUMMY_MULTIPLIER = (1 + DUMMY_MARKUP_PERCENT / 100) * USD_TO_INR_RATIO;
+function loadPricing() {
+  try {
+    if (fs.existsSync(PRICING_FILE)) {
+      const parsed = JSON.parse(fs.readFileSync(PRICING_FILE, "utf8"));
+      return {
+        usdToInrRatio: Number(parsed.usdToInrRatio) || DEFAULT_PRICING.usdToInrRatio,
+        sellingMarkupPercent:
+          parsed.sellingMarkupPercent !== undefined
+            ? Number(parsed.sellingMarkupPercent)
+            : DEFAULT_PRICING.sellingMarkupPercent,
+        dummyMarkupPercent:
+          parsed.dummyMarkupPercent !== undefined
+            ? Number(parsed.dummyMarkupPercent)
+            : DEFAULT_PRICING.dummyMarkupPercent,
+      };
+    }
+  } catch (err) {
+    console.warn("⚠️ Failed to read pricing.json, using defaults:", err.message);
+  }
+  return { ...DEFAULT_PRICING };
+}
+
+let currentPricing = loadPricing();
+
+export const SELLING_MARKUP_PERCENT = currentPricing.sellingMarkupPercent;
+export const DUMMY_MARKUP_PERCENT = currentPricing.dummyMarkupPercent;
+export const USD_TO_INR_RATIO = currentPricing.usdToInrRatio;
+
+export const getSellingMultiplier = () =>
+  (1 + currentPricing.sellingMarkupPercent / 100) * currentPricing.usdToInrRatio;
+
+export const getDummyMultiplier = () =>
+  (1 + currentPricing.dummyMarkupPercent / 100) * currentPricing.usdToInrRatio;
+
+export const SELLING_MULTIPLIER = getSellingMultiplier();
+export const DUMMY_MULTIPLIER = getDummyMultiplier();
+
+export function getPricingConfig() {
+  return {
+    ...currentPricing,
+    sellingMultiplier: getSellingMultiplier(),
+    dummyMultiplier: getDummyMultiplier(),
+  };
+}
+
+export function updatePricingConfig({
+  usdToInrRatio,
+  sellingMarkupPercent,
+  dummyMarkupPercent,
+}) {
+  if (usdToInrRatio !== undefined) {
+    const val = Number(usdToInrRatio);
+    if (!Number.isFinite(val) || val <= 0) {
+      throw new Error("usdToInrRatio must be a positive number");
+    }
+    currentPricing.usdToInrRatio = val;
+  }
+  if (sellingMarkupPercent !== undefined) {
+    const val = Number(sellingMarkupPercent);
+    if (!Number.isFinite(val) || val < 0) {
+      throw new Error("sellingMarkupPercent must be >= 0");
+    }
+    currentPricing.sellingMarkupPercent = val;
+  }
+  if (dummyMarkupPercent !== undefined) {
+    const val = Number(dummyMarkupPercent);
+    if (!Number.isFinite(val) || val < 0) {
+      throw new Error("dummyMarkupPercent must be >= 0");
+    }
+    currentPricing.dummyMarkupPercent = val;
+  }
+
+  fs.writeFileSync(PRICING_FILE, JSON.stringify(currentPricing, null, 2) + "\n", "utf8");
+  return getPricingConfig();
+}
+
+/* ===============================
+   SCRAPER HEADERS
+   =============================== */
+export const SCRAPER_HEADERS = {
+  "user-agent":
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1",
+  "sec-ch-ua": '"Chromium";v="146", "Not-A.Brand";v="24", "Brave";v="146"',
+  "sec-ch-ua-mobile": "?1",
+  "sec-ch-ua-platform": '"iOS"',
+};
